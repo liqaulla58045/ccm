@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>View Appointments - Doctor Appointment System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="container mt-5">
+    <h2>Your Appointments</h2>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary mb-3">Back to Dashboard</a>
+    {% if appointments %}
+      <table class="table">
+        <thead>
+          <tr>
+            {% if role == 'patient' %}
+            <th>Doctor</th>
+            {% elif role == 'doctor' %}
+            <th>Patient</th>
+            {% endif %}
+            <th>Date</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for appt in appointments %}
+          <tr>
+            {% if role == 'patient' %}
+            <td>{{ appt.doctor_name }}</td>
+            {% elif role == 'doctor' %}
+            <td>{{ appt.patient_name }}</td>
+            {% endif %}
+            <td>{{ appt.date }}</td>
+            <td>{{ appt.time }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No appointments found.</p>
+    {% endif %}
+  </div>
+</body>
+</html>
